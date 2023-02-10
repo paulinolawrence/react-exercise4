@@ -16,6 +16,27 @@ function App() {
     setEmployees(employees.filter((employee) => employee.id !== id));
   };
 
+  const handleAddEmployee = (employee) => {
+    setEmployees([
+      ...employees,
+      { ...employee, id: employees.length * 999 + 1 },
+    ]);
+  };
+
+  const handleEditEmployee = (id, employee) => {
+    setEmployees(
+      employees.map((emp) => {
+        if (emp.id === id) {
+          return {
+            ...employee,
+            id,
+          };
+        }
+        return emp;
+      })
+    );
+  };
+
   return (
     <>
       <CssBaseline />
@@ -31,7 +52,10 @@ function App() {
               />
             }
           />
-          <Route path="/employees/new" element={<AddEmployeePage />} />
+          <Route
+            path="/employees/new"
+            element={<AddEmployeePage onAddEmployee={handleAddEmployee} />}
+          />
           <Route
             path="/employees/:id"
             element={
@@ -41,7 +65,15 @@ function App() {
               />
             }
           />
-          <Route path="/employees/:id/edit" element={<EditEmployeePage />} />
+          <Route
+            path="/employees/:id/edit"
+            element={
+              <EditEmployeePage
+                onEditEmployee={handleEditEmployee}
+                employees={employees}
+              />
+            }
+          />
           <Route path="/not-found" element={<NotFound />} />
           <Route path="*" element={<Navigate to="/not-found" />} />
         </Routes>

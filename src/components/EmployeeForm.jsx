@@ -9,18 +9,23 @@ import {
 } from "@mui/material";
 import Joi from "joi";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const EmployeeForm = () => {
-  const [form, setForm] = useState({
-    name: "",
-    username: "",
-    email: "",
-    phone: "",
-    address: "",
-    website: "",
-  });
+const EmployeeForm = ({ onSubmit, initialValue }) => {
+  const [form, setForm] = useState(
+    initialValue || {
+      name: "",
+      username: "",
+      email: "",
+      phone: "",
+      address: "",
+      website: "",
+    }
+  );
 
   const [errors, setErrors] = useState({});
+
+  const navigate = useNavigate();
 
   const schema = Joi.object({
     name: Joi.string().min(2).max(100).required(),
@@ -35,7 +40,8 @@ const EmployeeForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(form);
+    onSubmit(form);
+    navigate("/");
   };
 
   const handleChange = ({ currentTarget: input }) => {
@@ -44,13 +50,13 @@ const EmployeeForm = () => {
       [input.name]: input.value,
     });
 
-    const result = schema
+    const { error } = schema
       .extract(input.name)
       .label(input.name)
       .validate(input.value);
 
-    if (result.error) {
-      setErrors({ ...errors, [input.name]: result.error.details[0].message });
+    if (error) {
+      setErrors({ ...errors, [input.name]: error.details[0].message });
     } else {
       delete errors[input.name];
       setErrors(errors);
@@ -59,6 +65,8 @@ const EmployeeForm = () => {
 
   const isFormInvalid = () => {
     const result = schema.validate(form);
+
+    console.log(result);
 
     return !!result.error;
     // console.log(result);
@@ -73,7 +81,7 @@ const EmployeeForm = () => {
     >
       <Grid item xs={6}>
         <Card>
-          <CardHeader title="Add Employee" />
+          <CardHeader title={`${initialValue ? "Edit" : "Add"} Employee`} />
           <CardContent>
             <Grid container spacing={2}>
               <Grid item xs={12}>

@@ -1,10 +1,10 @@
 import React from "react";
 import EmployeeForm from "../components/EmployeeForm";
 
-const AddEmployeePage = () => {
+const AddEmployeePage = ({ onAddEmployee }) => {
   return (
     <div>
-      <EmployeeForm />
+      <EmployeeForm onSubmit={onAddEmployee} />
     </div>
   );
 };
