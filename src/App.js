@@ -32,7 +32,15 @@ function App() {
             }
           />
           <Route path="/employees/new" element={<AddEmployeePage />} />
-          <Route path="/employees/:id" element={<EmployeeDetailsPage />} />
+          <Route
+            path="/employees/:id"
+            element={
+              <EmployeeDetailsPage
+                onDeleteEmployee={handleDeleteEmployee}
+                employees={employees}
+              />
+            }
+          />
           <Route path="/employees/:id/edit" element={<EditEmployeePage />} />
           <Route path="/not-found" element={<NotFound />} />
           <Route path="*" element={<Navigate to="/not-found" />} />
