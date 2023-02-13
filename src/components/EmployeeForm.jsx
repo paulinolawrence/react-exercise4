@@ -41,7 +41,6 @@ const EmployeeForm = ({ onSubmit, initialValue }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     onSubmit(form);
-    navigate("/");
   };
 
   const handleChange = ({ currentTarget: input }) => {
@@ -65,8 +64,6 @@ const EmployeeForm = ({ onSubmit, initialValue }) => {
 
   const isFormInvalid = () => {
     const result = schema.validate(form);
-
-    console.log(result);
 
     return !!result.error;
     // console.log(result);
