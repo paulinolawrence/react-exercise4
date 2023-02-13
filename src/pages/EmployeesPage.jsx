@@ -1,20 +1,17 @@
 import AddIcon from "@mui/icons-material/Add";
 import { Button, Grid } from "@mui/material";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import EmployeesTable from "../components/EmployeesTable";
 import * as employeeService from "../services/employee";
 
 const EmployeesPage = () => {
   const [employees, setEmployees] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     employeeService.fetchEmployees().then((response) => {
       setEmployees(response.data);
     });
-    console.log(employees);
   }, []);
 
   const handleDeleteEmployee = async (id) => {
@@ -22,7 +19,7 @@ const EmployeesPage = () => {
 
     try {
       setEmployees(employees.filter((employee) => employee.id !== id));
-      const returnValue = await employeeService.deleteEmployee(id);
+      await employeeService.deleteEmployee(id);
     } catch (error) {
       if (error.response && error.response.status === 404) {
         alert("Data might have already been deleted");

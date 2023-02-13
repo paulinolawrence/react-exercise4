@@ -20,12 +20,21 @@ export function addEmployee(employee) {
     }
   });
 
-  console.log(employeeClone);
   return http.post("/employees", employeeClone);
 }
 
 export function updateEmployee(id, employee) {
-  return http.put(`/employees/${id}`, employee);
+  const employeeClone = { ...employee };
+  Object.keys(employeeClone).forEach((key) => {
+    if (
+      employeeClone[key] === "" ||
+      employeeClone[key] === null ||
+      employeeClone[key] === undefined
+    ) {
+      delete employeeClone[key];
+    }
+  });
+  return http.put(`/employees/${id}`, employeeClone);
 }
 
 export function deleteEmployee(id) {

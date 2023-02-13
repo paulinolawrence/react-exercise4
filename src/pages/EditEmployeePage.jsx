@@ -20,10 +20,16 @@ const EditEmployeePage = () => {
   }, []);
 
   const handleSubmit = (form) => {
-    employeeService.updateEmployee(employee.id, form).then((response) => {
-      console.log(response);
-      navigate("/");
-    });
+    employeeService
+      .updateEmployee(employee.id, form)
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 400) {
+          alert(error.response.data.message[0]);
+        }
+      });
   };
 
   if (loading) {
@@ -38,9 +44,9 @@ const EditEmployeePage = () => {
             name: employee.name,
             username: employee.username,
             email: employee.email,
-            phone: employee.phone,
-            address: employee.address,
-            website: employee.website,
+            phone: employee.phone || "",
+            address: employee.address || "",
+            website: employee.website || "",
           }}
           onSubmit={handleSubmit}
         />

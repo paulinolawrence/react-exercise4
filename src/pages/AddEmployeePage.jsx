@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import EmployeeForm from "../components/EmployeeForm";
 import * as employeeService from "../services/employee";
 
-const AddEmployeePage = ({ onAddEmployee }) => {
+const AddEmployeePage = () => {
   const navigate = useNavigate();
   const handleSubmit = (employee) => {
     employeeService
