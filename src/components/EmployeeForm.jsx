@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import Joi from "joi";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const EmployeeForm = ({ onSubmit, initialValue }) => {
   const [form, setForm] = useState(
@@ -24,8 +23,6 @@ const EmployeeForm = ({ onSubmit, initialValue }) => {
   );
 
   const [errors, setErrors] = useState({});
-
-  const navigate = useNavigate();
 
   const schema = Joi.object({
     name: Joi.string().min(2).max(100).required(),
@@ -66,7 +63,6 @@ const EmployeeForm = ({ onSubmit, initialValue }) => {
     const result = schema.validate(form);
 
     return !!result.error;
-    // console.log(result);
   };
 
   return (

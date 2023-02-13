@@ -17,7 +17,7 @@ const EditEmployeePage = () => {
       setEmployee(response.data);
       setLoading(false);
     });
-  }, []);
+  }, [params.id]);
 
   const handleSubmit = (form) => {
     employeeService

@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as employeeService from "../services/employee";
 
 const EmployeeDetailsPage = () => {
@@ -31,11 +31,17 @@ const EmployeeDetailsPage = () => {
       setEmployee(response.data);
       setLoading(false);
     });
-  }, []);
+  }, [params.id]);
 
   const handleDeleteEmployee = async (id) => {
-    const returnValue = await employeeService.deleteEmployee(id);
-    navigate("/");
+    try {
+      await employeeService.deleteEmployee(id);
+      navigate("/");
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        alert("Data might have already been deleted");
+      }
+    }
   };
 
   const handleOpenMenu = (event) => {

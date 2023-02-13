@@ -28,27 +28,6 @@ const EmployeesPage = () => {
     }
   };
 
-  const handleAddEmployee = (employee) => {
-    setEmployees([
-      ...employees,
-      { ...employee, id: employees.length * 999 + 1 },
-    ]);
-  };
-
-  const handleEditEmployee = (id, employee) => {
-    setEmployees(
-      employees.map((emp) => {
-        if (emp.id === id) {
-          return {
-            ...employee,
-            id,
-          };
-        }
-        return emp;
-      })
-    );
-  };
-
   return (
     <Grid container spacing={2} justifyContent="flex-end" textAlign="right">
       <Grid item xs={4}>
