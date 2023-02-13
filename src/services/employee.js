@@ -10,16 +10,15 @@ export function fetchEmployeeById(id) {
 
 export function addEmployee(employee) {
   const employeeClone = { ...employee };
-  //   Object.keys(employeeClone).forEach((key) => {
-  //     if (
-  //       employeeClone[key] === "" ||
-  //       employeeClone[key] === null ||
-  //       employeeClone[key] === undefined
-  //     ) {
-  //       delete employeeClone[key];
-  //     }
-  //   }
-  //   );
+  Object.keys(employeeClone).forEach((key) => {
+    if (
+      employeeClone[key] === "" ||
+      employeeClone[key] === null ||
+      employeeClone[key] === undefined
+    ) {
+      delete employeeClone[key];
+    }
+  });
 
   console.log(employeeClone);
   return http.post("/employees", employeeClone);
