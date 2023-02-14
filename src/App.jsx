@@ -11,6 +11,7 @@ import * as authService from "./services/auth";
 import NavBar from "./components/NavBar";
 import { useState } from "react";
 
+//Paulino - Exercise 3 CDP Full Stack Batch 04-22
 function App() {
   const navigate = useNavigate();
 
