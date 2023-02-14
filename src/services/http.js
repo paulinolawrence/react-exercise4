@@ -18,4 +18,12 @@ http.interceptors.response.use(null, (error) => {
   return Promise.reject(error);
 });
 
+http.interceptors.request.use((request) => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (accessToken) {
+    request.headers = { Authorization: `Bearer ${accessToken}` };
+  }
+  return request;
+});
+
 export default http;
