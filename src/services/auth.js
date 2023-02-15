@@ -1,8 +1,8 @@
 import jwtDecode from "jwt-decode";
 import http from "./http";
 
-export function register(username, password) {
-  return http.post("/users", { username, password });
+export function register(name, username, password) {
+  return http.post("/users", { name, username, password });
 }
 
 export function login(username, password) {
@@ -19,9 +19,11 @@ export function getAccessToken() {
 
 export function getCurrentUser() {
   const accessToken = localStorage.getItem("accessToken");
+
   if (accessToken) {
     const decoded = jwtDecode(accessToken);
-    return decoded.user;
+    console.log(decoded);
+    return decoded;
   }
   return null;
 }

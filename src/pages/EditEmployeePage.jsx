@@ -41,12 +41,8 @@ const EditEmployeePage = () => {
       <div>
         <EmployeeForm
           initialValue={{
-            name: employee.name,
-            username: employee.username,
-            email: employee.email,
-            phone: employee.phone || "",
-            address: employee.address || "",
-            website: employee.website || "",
+            title: employee.title,
+            completed: employee.completed,
           }}
           onSubmit={handleSubmit}
         />

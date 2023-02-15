@@ -14,6 +14,7 @@ import * as authService from "../services/auth";
 
 const RegisterPage = () => {
   const [form, setForm] = useState({
+    name: "",
     username: "",
     password: "",
   });
@@ -23,6 +24,7 @@ const RegisterPage = () => {
   const [errors, setErrors] = useState({});
 
   const schema = Joi.object({
+    name: Joi.string().required(),
     username: Joi.string().required(),
     password: Joi.string().required(),
   });
@@ -30,7 +32,11 @@ const RegisterPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await authService.register(form.username, form.password);
+      const response = await authService.register(
+        form.name,
+        form.username,
+        form.password
+      );
       alert("Registration successful");
       navigate("/login");
     } catch (error) {
@@ -77,6 +83,18 @@ const RegisterPage = () => {
           <CardHeader title="Register" />
           <CardContent>
             <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  name="name"
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  onChange={handleChange}
+                  value={form.name}
+                  label="Name"
+                  variant="standard"
+                  fullWidth
+                />
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   name="username"

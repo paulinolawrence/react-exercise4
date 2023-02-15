@@ -2,7 +2,6 @@ import { Container, CssBaseline } from "@mui/material";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import AddEmployeePage from "./pages/AddEmployeePage";
 import EmployeesPage from "./pages/EmployeesPage";
-import EmployeeDetailsPage from "./pages/EmployeeDetailsPage";
 import EditEmployeePage from "./pages/EditEmployeePage";
 import NotFound from "./pages/NotFound";
 import RegisterPage from "./pages/RegisterPage";
@@ -22,6 +21,8 @@ function App() {
       const response = await authService.login(username, password);
       console.log(response.data.accessToken);
       localStorage.setItem("accessToken", response.data.accessToken);
+      const token = localStorage.getItem("accessToken");
+      console.log(token);
       setAccessToken(response.data.accessToken);
       navigate("/");
     } catch (error) {
@@ -51,12 +52,6 @@ function App() {
             path="/employees/new"
             element={
               accessToken ? <AddEmployeePage /> : <Navigate to="/login" />
-            }
-          />
-          <Route
-            path="/employees/:id"
-            element={
-              accessToken ? <EmployeeDetailsPage /> : <Navigate to="/login" />
             }
           />
           <Route

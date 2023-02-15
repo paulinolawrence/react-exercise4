@@ -29,18 +29,18 @@ const EmployeesPage = () => {
   };
 
   return (
-    <Grid container spacing={2} justifyContent="flex-end" textAlign="right">
-      <Grid item xs={4}>
+    <Grid container spacing={2} justifyContent="center" textAlign="right">
+      <Grid item xs={8}>
         <Button
           variant="text"
           startIcon={<AddIcon />}
           LinkComponent={Link}
           to="/employees/new"
         >
-          Add Employee
+          Add Task
         </Button>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={8}>
         <EmployeesTable
           onDeleteEmployee={handleDeleteEmployee}
           employees={employees}

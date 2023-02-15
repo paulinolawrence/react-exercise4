@@ -13,12 +13,8 @@ import React, { useState } from "react";
 const EmployeeForm = ({ onSubmit, initialValue }) => {
   const [form, setForm] = useState(
     initialValue || {
-      name: "",
-      username: "",
-      email: "",
-      phone: "",
-      address: "",
-      website: "",
+      title: "",
+      completed: false,
     }
   );
 

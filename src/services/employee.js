@@ -1,11 +1,11 @@
 import http from "./http";
 
 export function fetchEmployees() {
-  return http.get("/employees");
+  return http.get("/tasks");
 }
 
 export function fetchEmployeeById(id) {
-  return http.get(`/employees/${id}`);
+  return http.get(`/tasks/${id}`);
 }
 
 export function addEmployee(employee) {
@@ -23,20 +23,20 @@ export function addEmployee(employee) {
   return http.post("/employees", employeeClone);
 }
 
-export function updateEmployee(id, employee) {
-  const employeeClone = { ...employee };
-  Object.keys(employeeClone).forEach((key) => {
+export function updateEmployee(id, task) {
+  const taskClone = { ...task };
+  Object.keys(taskClone).forEach((key) => {
     if (
-      employeeClone[key] === "" ||
-      employeeClone[key] === null ||
-      employeeClone[key] === undefined
+      taskClone[key] === "" ||
+      taskClone[key] === null ||
+      taskClone[key] === undefined
     ) {
-      delete employeeClone[key];
+      delete taskClone[key];
     }
   });
-  return http.put(`/employees/${id}`, employeeClone);
+  return http.put(`/tasks/${id}`, taskClone);
 }
 
 export function deleteEmployee(id) {
-  return http.delete(`/employees/${id}`);
+  return http.delete(`/tasks/${id}`);
 }
