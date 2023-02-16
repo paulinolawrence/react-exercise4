@@ -22,7 +22,6 @@ export function getCurrentUser() {
 
   if (accessToken) {
     const decoded = jwtDecode(accessToken);
-    console.log(decoded);
     return decoded;
   }
   return null;

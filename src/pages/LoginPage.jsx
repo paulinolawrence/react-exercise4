@@ -18,7 +18,6 @@ const LoginPage = ({ onLogin }) => {
     password: "",
   });
 
-  const navigate = useNavigate();
   const [errors, setErrors] = useState({});
 
   const schema = Joi.object({

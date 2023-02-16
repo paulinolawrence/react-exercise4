@@ -13,41 +13,51 @@ const NavBar = ({ onLogout }) => {
   const navigate = useNavigate();
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar sx={{ bgcolor: "green" }} position="static">
         <Toolbar>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, cursor: "pointer" }}
-            onClick={() => navigate("/")}
-          >
-            Employee App
-          </Typography>
-          <div>
-            {currentUser ? (
-              <>
-                <Typography
-                  component="span"
-                  variant="body1"
-                  sx={{ marginRight: 2 }}
-                >
-                  Welcome {currentUser.name}!
-                </Typography>
-                <Button color="inherit" onClick={onLogout}>
-                  Logout
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button LinkComponent={Link} to="/register" color="inherit">
-                  Register
-                </Button>
-                <Button LinkComponent={Link} to="/login" color="inherit">
-                  Login
-                </Button>
-              </>
-            )}
-          </div>
+          {currentUser ? (
+            <div>
+              <Typography align="left">
+                Welcome <b>{currentUser.name}!</b>
+              </Typography>
+            </div>
+          ) : (
+            <Typography
+              align="center"
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1, cursor: "pointer", ml: 23 }}
+              onClick={() => navigate("/")}
+            >
+              Todo App
+            </Typography>
+          )}
+
+          {currentUser ? (
+            <>
+              <Typography
+                align="center"
+                variant="h6"
+                component="div"
+                sx={{ flexGrow: 1, cursor: "pointer" }}
+                onClick={() => navigate("/")}
+              >
+                Todo App
+              </Typography>
+              <Button color="inherit" onClick={onLogout}>
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button LinkComponent={Link} to="/register" color="inherit">
+                Register
+              </Button>
+              <Button LinkComponent={Link} to="/login" color="inherit">
+                Login
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </Box>

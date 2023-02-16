@@ -11,23 +11,30 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import { CheckCircle, Pending } from "@mui/icons-material";
-import * as employeeService from "../services/employee";
+import * as taskService from "../services/task";
 import Joi from "joi";
 import { Box, Button, TextField } from "@mui/material";
 
-const EmployeesTable = ({ employees, onDeleteEmployee }) => {
+const TasksTable = ({ tasks }) => {
   const [form, setForm] = useState(null);
 
   const navigate = useNavigate();
 
+  const toggleStatus = (id, completed) => {
+    console.log(id, completed);
+    taskService.updateTaskStatus(id, !completed).then(() => {
+      navigate("/");
+    });
+  };
+
   const editTask = (id) => {
-    employeeService.fetchEmployeeById(id).then((response) => {
+    taskService.fetchTaskById(id).then((response) => {
       setForm(response.data);
     });
   };
 
   const deleteTask = (id) => {
-    employeeService.deleteEmployee(id).then(() => {
+    taskService.deleteTask(id).then(() => {
       navigate("/");
     });
   };
@@ -36,14 +43,13 @@ const EmployeesTable = ({ employees, onDeleteEmployee }) => {
 
   const schema = Joi.object({
     id: Joi.allow(),
-    title: Joi.string().min(5).required(),
+    title: Joi.string().min(3).required(),
     completed: Joi.boolean().allow(),
     userId: Joi.allow(),
   });
 
   const handleSubmit = (id, form) => {
-    setForm({});
-    employeeService.updateEmployee(id, form).then(() => {
+    taskService.updateTask(id, form).then(() => {
       navigate("/");
     });
   };
@@ -80,14 +86,14 @@ const EmployeesTable = ({ employees, onDeleteEmployee }) => {
             <TableCell>Id</TableCell>
             <TableCell>Title</TableCell>
             <TableCell>Status</TableCell>
-            <TableCell>Actions</TableCell>
+            <TableCell>&emsp;Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {employees.map((employee) => (
-            <TableRow key={employee.id}>
-              <TableCell>{employee.id}</TableCell>
-              {form != null && employee.id == form.id ? (
+          {tasks.map((task) => (
+            <TableRow key={task.id}>
+              <TableCell>{task.id}</TableCell>
+              {form != null && task.id == form.id ? (
                 <TextField
                   sx={{ mt: 5 }}
                   name="title"
@@ -99,41 +105,51 @@ const EmployeesTable = ({ employees, onDeleteEmployee }) => {
                   fullWidth
                 />
               ) : (
-                <TableCell>{employee.title}</TableCell>
+                <TableCell>{task.title}</TableCell>
               )}
 
               <TableCell>
-                {employee.completed ? (
-                  <CheckCircle color="success" />
+                {task.completed ? (
+                  <IconButton>
+                    <CheckCircle
+                      onClick={() => toggleStatus(task.id, task.completed)}
+                      color="success"
+                    />
+                  </IconButton>
                 ) : (
-                  <Pending color="warning" />
+                  <IconButton>
+                    <Pending
+                      onClick={() => toggleStatus(task.id, task.completed)}
+                      color="warning"
+                    />
+                  </IconButton>
                 )}
               </TableCell>
-              {form != null && employee.id == form.id ? (
-                <TableCell>
+              <TableCell>
+                {form != null && task.id == form.id ? (
                   <Button
                     disabled={isFormInvalid()}
-                    onClick={() => handleSubmit(employee.id, form)}
+                    onClick={() => handleSubmit(task.id, form)}
                   >
                     Done
                   </Button>
-                </TableCell>
-              ) : (
-                <TableCell>
-                  <IconButton
-                    sx={{ "&:hover": { color: "blue" } }}
-                    onClick={() => editTask(employee.id)}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    sx={{ "&:hover": { color: "red" } }}
-                    onClick={() => deleteTask(employee.id)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </TableCell>
-              )}
+                ) : (
+                  <>
+                    <IconButton
+                      sx={{ "&:hover": { color: "blue" } }}
+                      onClick={() => editTask(task.id)}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton
+                      sx={{ "&:hover": { color: "red" } }}
+                      onClick={() => deleteTask(task.id)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </>
+                )}{" "}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -142,4 +158,4 @@ const EmployeesTable = ({ employees, onDeleteEmployee }) => {
   );
 };
 
-export default EmployeesTable;
+export default TasksTable;

@@ -1,8 +1,6 @@
 import { Container, CssBaseline } from "@mui/material";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
-import AddEmployeePage from "./pages/AddEmployeePage";
-import EmployeesPage from "./pages/EmployeesPage";
-import EditEmployeePage from "./pages/EditEmployeePage";
+import TaskPage from "./pages/TaskPage";
 import NotFound from "./pages/NotFound";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
@@ -10,7 +8,7 @@ import * as authService from "./services/auth";
 import NavBar from "./components/NavBar";
 import { useState } from "react";
 
-//Paulino - Exercise 3 CDP Full Stack Batch 04-22
+//Paulino - Exercise 4 CDP Full Stack Batch 04-22
 function App() {
   const navigate = useNavigate();
 
@@ -43,22 +41,10 @@ function App() {
       <NavBar onLogout={handleLogout} />
       <Container sx={{ marginTop: 3 }}>
         <Routes>
-          <Route path="/" element={<Navigate to="/employees" />} />
+          <Route path="/" element={<Navigate to="/tasks" />} />
           <Route
-            path="/employees"
-            element={accessToken ? <EmployeesPage /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/employees/new"
-            element={
-              accessToken ? <AddEmployeePage /> : <Navigate to="/login" />
-            }
-          />
-          <Route
-            path="/employees/:id/edit"
-            element={
-              accessToken ? <EditEmployeePage /> : <Navigate to="/login" />
-            }
+            path="/tasks"
+            element={accessToken ? <TaskPage /> : <Navigate to="/login" />}
           />
           <Route
             path="/register"
